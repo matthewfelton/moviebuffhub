@@ -1,0 +1,56 @@
+[
+    {
+        "title": "Ghostbusters",
+        "genre": "Comedy",
+        "rating": "PG",
+        "runTime": "1h 45m",
+        "releaseYear": "1984",
+        "director": "Ivan Reitman",
+        "metascore": "71"
+    },
+    {
+        "title": "The Batman",
+        "genre": "Drama",
+        "rating": "PG-13",
+        "runTime": "2h 56m",
+        "releaseYear": "2022",
+        "director": "Matt Reeves",
+        "metascore": "71"
+    },
+    {
+        "title": "Apollo 13",
+        "genre": "Drama",
+        "rating": "PG",
+        "runTime": "2h 20m",
+        "releaseYear": "1995",
+        "director": "Ron Howard",
+        "metascore": "78"
+    },
+    {
+        "title": "Toy Story",
+        "genre": "Animation",
+        "rating": "G",
+        "runTime": "1h 21m",
+        "releaseYear": "1995",
+        "director": "John Lasseter",
+        "metascore": "98"
+    },
+    {
+        "title": "Spirted Away",
+        "genre": "Animation",
+        "rating": "PG",
+        "runTime": "2h 5m",
+        "releaseYear": "2001",
+        "director": "Hayao Miyazaki",
+        "metascore": "96"
+    },
+    {
+        "title": "Star Wars: Episode IV - A New Hope",
+        "genre": "Fantasy",
+        "rating": "PG",
+        "runTime": "2h 1m",
+        "releaseYear": "1977",
+        "director": "George Lucas",
+        "metascore": "90"
+    }
+]
