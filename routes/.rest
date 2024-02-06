@@ -1,0 +1,93 @@
+// rest file to test requests to local and server hosts
+
+// LOCAL HOST 
+
+// localhost Get All Rest Request 
+http://localhost:8080/movies HTTP/1.1
+###
+
+// localhost get single record Rest Request Test 1 
+http://localhost:8080/movies/65a99cc80304e1c64d088ccb HTTP/1.1
+###
+
+// localhost get single record Rest Request Test 2
+GET http://localhost:8080/movies/65a99cc80304e1c64d088ccc HTTP/1.1
+###
+
+### Create Movie
+POST http://localhost:8080/movies HTTP/1.1
+content-type: application/json
+
+{
+    "title": "Star Wars: Episode V - The Empire Strikes Back",
+    "genre": "Fantasy",
+    "rating": "PG",
+    "runTime": "2h 4m",
+    "releaseYear": "1980",
+    "director": "George Lucas",
+    "metascore": "82"
+}
+
+
+### Update Movie
+PUT http://localhost:8080/movies/65b304f3c2180ef101617a8d HTTP/1.1 
+Content-Type: application/json
+
+{   
+    "title": "Star Wars: Episode IV - A New Hope",
+    "genre": "Fantasy",
+    "rating": "PG",
+    "runTime": "2h 1m",
+    "releaseYear": "1977",
+    "director": "George Lucas",
+    "metascore": "90"
+} 
+
+### Delete Movie
+DELETE http://localhost:8080/movies/65b304f3c2180ef101617a8d HTTP/1.1
+###
+
+// ----------------------------------------------------------------------------------------------------------------------------------------------
+// RENDER SERVER
+// ----------------------------------------------------------------------------------------------------------------------------------------------
+
+// server Get All Rest Request 
+GET https://cse341-mfelton.onrender.com/movies HTTP/1.1
+###
+
+// server get single record Rest Request 
+GET https://moviebuffhub.onrender.com/movies/65a99cc80304e1c64d088ccb  HTTP/1.1
+###
+
+### CREATE Movie
+POST https://moviebuffhub.onrender.com/movies HTTP/1.1 
+Content-Type: application/json
+
+{
+    "title": "Star Wars: Episode VI - Return of the Jedi",
+    "genre": "Fantasy",
+    "rating": "PG",
+    "runTime": "2h 11m",
+    "releaseYear": "1983",
+    "director": "George Lucas",
+    "metascore": "58"
+}
+
+
+### UPDATE Movie
+PUT https://moviebuffhub.onrender.com/movies/65b30528aaf85504d6a0ede0 HTTP/1.1 
+Content-Type: application/json
+
+{
+    "title": "Toy Story",
+    "genre": "Animation",
+    "rating": "G",
+    "runTime": "1h 21m",
+    "releaseYear": "1995",
+    "director": "John Lasseter",
+    "metascore": "98"
+} 
+
+
+### DELETE Movie 
+DELETE https://moviebuffhub.onrender.com/movies/65b30528aaf85504d6a0ede0 HTTP/1.1
