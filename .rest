@@ -7,7 +7,7 @@ http://localhost:8080/movies HTTP/1.1
 ###
 
 // localhost get single record
-http://localhost:8080/movies/65c2a1570304e1c64d088cdd HTTP/1.1
+http://localhost:8080/movies/65c2a1570304e1c64d088cdb HTTP/1.1
 ###
 
 
@@ -49,11 +49,11 @@ DELETE http://localhost:8080/movies/65b304f3c2180ef101617a8d HTTP/1.1
 // ----------------------------------------------------------------------------------------------------------------------------------------------
 
 // server Get All Rest Request 
-GET https://cse341-mfelton.onrender.com/movies HTTP/1.1
+GET https://moviebuffhub.onrender.com/movies HTTP/1.1
 ###
 
 // server get single record Rest Request 
-GET https://moviebuffhub.onrender.com/movies/65a99cc80304e1c64d088ccb  HTTP/1.1
+GET https://moviebuffhub.onrender.com/movies/65c2a1570304e1c64d088cdc  HTTP/1.1
 ###
 
 ### CREATE Movie
