@@ -6,13 +6,10 @@
 http://localhost:8080/movies HTTP/1.1
 ###
 
-// localhost get single record Rest Request Test 1 
-http://localhost:8080/movies/65a99cc80304e1c64d088ccb HTTP/1.1
+// localhost get single record
+http://localhost:8080/movies/65c2a1570304e1c64d088cdd HTTP/1.1
 ###
 
-// localhost get single record Rest Request Test 2
-GET http://localhost:8080/movies/65a99cc80304e1c64d088ccc HTTP/1.1
-###
 
 ### Create Movie
 POST http://localhost:8080/movies HTTP/1.1

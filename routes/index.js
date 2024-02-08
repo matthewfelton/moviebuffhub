@@ -9,4 +9,5 @@ const router = express.Router();
 // points route to movies.js
 router.use('/movies', require('./movies'));
 
+
 module.exports = router;
