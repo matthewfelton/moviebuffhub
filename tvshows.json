@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Breaking Bad",
+        "genre": "Crime",
+        "rating": "TV-MA",
+        "runTime": "45m",
+        "airTime": "2008-2013"
+    },
+    {
+        "title": "Avatar: The Last Airbender",
+        "genre": "Animation",
+        "rating": "TV-Y7",
+        "runTime": "23m",
+        "airTime": "2005-2008"
+    },
+    {
+        "title": "Friends",
+        "genre": "Comedy",
+        "rating": "TV-14",
+        "runTime": "23m",
+        "airTime": "1994-2004"
+    }
+]

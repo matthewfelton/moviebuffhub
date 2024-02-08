@@ -1,12 +1,12 @@
 // points variable to path of db connection information 
 const mongodb = require('../db/connection');
-// important ObjectId and allows single pull movie to work and not error out and murder the server
+// important ObjectId and allows single pull tv to work and not error out and murder the server
 const ObjectId = require('mongodb').ObjectId;
 
-// pull all movies from db and creats an array using asynchronous fuction
-const pull_all_movies = async (req, res, next) => {
+// pull all tv from db and creats an array using asynchronous fuction
+const pull_all_tv = async (req, res, next) => {
     // Using MongoDB's async API to get the 'movies' collection 
-    const result = await mongodb.getDb().db().collection('movies').find();
+    const result = await mongodb.getDb().db().collection('tvshows').find();
     // Converting the result to an array
     result.toArray().then((lists) => {
         // Setting the response header to indicate JSON content
@@ -16,9 +16,9 @@ const pull_all_movies = async (req, res, next) => {
     });
 };
 
-const pull_single_movie = async (req, res, next) => {
-    // Extracting the movie ID from the request parameters
-    const movieId = new ObjectId(req.params.id);
+const pull_single_tv = async (req, res, next) => {
+    // Extracting the tv ID from the request parameters
+    const tvId = new ObjectId(req.params.id);
 
     
     try {
@@ -26,8 +26,8 @@ const pull_single_movie = async (req, res, next) => {
         const result = await mongodb
             .getDb()
             .db()
-            .collection('movies')
-            .find({ _id: movieId });
+            .collection('tvshows')
+            .find({ _id: tvId });
     
         const lists = await result.toArray();
     
@@ -35,88 +35,86 @@ const pull_single_movie = async (req, res, next) => {
             res.setHeader('Content-Type', 'application/json');
             res.status(200).json(lists[0]);
         } else {
-            res.status(404).json({ error: 'Movie not found' });
+            res.status(404).json({ error: 'Tv show not found' });
         }
     } catch (error) {
-        console.error('Error fetching single movie:', error);
+        console.error('Error fetching single Tv show:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 // creates new movie and sends to db
-const create_movie = async (req, res) => {
-    const movie = {
+const create_tv = async (req, res) => {
+    const tv = {
         title: req.body.title,
         genre: req.body.genre,
         rating: req.body.rating,
         runTime: req.body.runTime,
-        releaseYear: req.body.releaseYear,
-        director: req.body.director,
-        metascore: req.body.metascore
+        airTime: req.body.airTime
+        
     };
-    const response = await mongodb.getDb().db().collection('movies').insertOne(movie);
+    const response = await mongodb.getDb().db().collection('tvshows').insertOne(tv);
     if (response.acknowledged) {
         res.status(201).json(response);
     } else {
-        res.status(500).json(response.error || 'Some error occurred while creating the movie.');
+        res.status(500).json(response.error || 'Some error occurred while creating the Tv Show.');
     }
 };
 
 // update existing db
-const update_movie = async (req, res) => {
+const update_tv = async (req, res) => {
     try {
-      // Extracting movie ID from the request parameters
-    const movie_Id = req.params.id;
+      // Extracting tv ID from the request parameters
+    const tv_Id = req.params.id;
 
       // Validate that movie_id is a valid ObjectId before attempting to create ObjectId
     if (!ObjectId.isValid(movie_Id)) {
-        return res.status(400).json({ error: 'Invalid movie ID format' });
+        return res.status(400).json({ error: 'Invalid contact ID format' });
     }
 
-    const movieId = new ObjectId(movie_Id);
+    const tvId = new ObjectId(tv_Id);
 
       // Creating a movie object from the request body
-    const movie = {
+    const tv = {
         title: req.body.title,
         genre: req.body.genre,
         rating: req.body.rating,
         runTime: req.body.runTime,
-        releaseYear: req.body.releaseYear,
-        director: req.body.director,
-        metascore: req.body.metascore
+        airTime: req.body.airTime
+        
     };
       // Updating the movie with the specified ID in the 'contacts' collection
-    const response = await mongodb.getDb().db().collection('movies').replaceOne({ _id: movieId }, movie);
+    const response = await mongodb.getDb().db().collection('tvshows').replaceOne({ _id: tvId }, tv);
     console.log('Update Response:', response);
       // Responding with status 204 if the movie is successfully updated
     if (response.modifiedCount > 0) {
             res.status(204).send();
         } else {
         // Responding with status 404 if the movie does not exist
-            res.status(404).json({ error: 'Movie not found' });
+            res.status(404).json({ error: 'Tv Show not found' });
         }
     } catch (error) {
       // Log the error for troubleshooting
-        console.error('Error in update_movie:', error);
+        console.error('Error in update_tv:', error);
 
       // Responding with status 500 and an error message if there's an issue
-        res.status(500).json({ error: 'Some error occurred while updating the movie.' });
+        res.status(500).json({ error: 'Some error occurred while updating the tv show.' });
     }
 };
 // delete existing contact
-const delete_movie = async (req, res) => {
+const delete_tv = async (req, res) => {
     try {
       // Extracting contact ID from the request parameters
-    const movie_Id = req.params.id;
+    const tv_Id = req.params.id;
       // Validate that contactId is a valid ObjectId before attempting to create ObjectId
-    if (!ObjectId.isValid(movie_Id)) {
-        return res.status(400).json({ error: 'Invalid contact ID format' });
+    if (!ObjectId.isValid(tv_Id)) {
+        return res.status(400).json({ error: 'Invalid tv show ID format' });
     }
 
-    const movieId = new ObjectId(movie_Id);
+    const tvId = new ObjectId(movie_Id);
 
       // Removing the movie with the specified ID from the 'movie' collection
-    const response = await mongodb.getDb().db().collection('movies').deleteOne({ _id: movieId });
+    const response = await mongodb.getDb().db().collection('tvshows').deleteOne({ _id: tvId });
 
         console.log(response);
 
@@ -130,14 +128,14 @@ const delete_movie = async (req, res) => {
     } catch (error) {
       // Responding with status 500 and an error message if there's an issue
         console.error(error);
-        res.status(500).json({ error: 'Some error occurred while deleting the movie.' });
+        res.status(500).json({ error: 'Some error occurred while deleting the tv show.' });
     }
 };
 
 module.exports = {
-    pull_all_movies,
-    pull_single_movie,
-    create_movie,
-    update_movie,
-    delete_movie
+    pull_all_tv,
+    pull_single_tv,
+    create_tv,
+    update_tv,
+    delete_tv
 };
