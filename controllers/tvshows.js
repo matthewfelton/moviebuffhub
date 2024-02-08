@@ -68,7 +68,7 @@ const update_tv = async (req, res) => {
     const tv_Id = req.params.id;
 
       // Validate that movie_id is a valid ObjectId before attempting to create ObjectId
-    if (!ObjectId.isValid(movie_Id)) {
+    if (!ObjectId.isValid(tv_Id)) {
         return res.status(400).json({ error: 'Invalid contact ID format' });
     }
 
@@ -111,7 +111,7 @@ const delete_tv = async (req, res) => {
         return res.status(400).json({ error: 'Invalid tv show ID format' });
     }
 
-    const tvId = new ObjectId(movie_Id);
+    const tvId = new ObjectId(tv_Id);
 
       // Removing the movie with the specified ID from the 'movie' collection
     const response = await mongodb.getDb().db().collection('tvshows').deleteOne({ _id: tvId });
