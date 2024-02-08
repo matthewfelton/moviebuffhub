@@ -6,9 +6,11 @@ const router = express.Router();
 
 // swagger route
 router.use('/api-doc', require('./swagger'));
-// points route to movies.js
-router.use('/movies', require('./movies'));
 
+
+
+// other routes
+router.use('/movies', require('./movies'));
 router.use('/tvshows', require('./tvshows'));
 
 module.exports = router;

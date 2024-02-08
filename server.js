@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
+
 // points variable to path of db connection information 
 const mongodb = require('./db/connection');
 
@@ -19,6 +20,8 @@ app
     .use(bodyParser.json())
     .use(express.urlencoded({ extended: true }))
     .use('/', require('./routes'));
+    
+
 
 // Attempts to connect to database throws error or success message
 mongodb.initDb((err) => {
