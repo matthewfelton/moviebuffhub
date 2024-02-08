@@ -43,8 +43,101 @@ const pull_single_movie = async (req, res, next) => {
     }
 };
 
+// creates new movie and sends to db
+const create_movie = async (req, res) => {
+    const movie = {
+        title: req.body.title,
+        genre: req.body.genre,
+        rating: req.body.rating,
+        runTime: req.body.runTime,
+        releaseYear: req.body.releaseYear,
+        director: req.body.director,
+        metascore: req.body.metascore
+    };
+    const response = await mongodb.getDb().db().collection('movies').insertOne(movie);
+    if (response.acknowledged) {
+        res.status(201).json(response);
+    } else {
+        res.status(500).json(response.error || 'Some error occurred while creating the movie.');
+    }
+};
+
+// update existing db
+const update_movie = async (req, res) => {
+    try {
+      // Extracting movie ID from the request parameters
+    const movie_Id = req.params.id;
+
+      // Validate that movie_id is a valid ObjectId before attempting to create ObjectId
+    if (!ObjectId.isValid(movie_Id)) {
+        return res.status(400).json({ error: 'Invalid contact ID format' });
+    }
+
+    const movieId = new ObjectId(movie_Id);
+
+      // Creating a movie object from the request body
+    const movie = {
+        title: req.body.title,
+        genre: req.body.genre,
+        rating: req.body.rating,
+        runTime: req.body.runTime,
+        releaseYear: req.body.releaseYear,
+        director: req.body.director,
+        metascore: req.body.metascore
+    };
+      // Updating the movie with the specified ID in the 'contacts' collection
+    const response = await mongodb.getDb().db().collection('movies').replaceOne({ _id: movieId }, movie);
+    console.log('Update Response:', response);
+      // Responding with status 204 if the movie is successfully updated
+    if (response.modifiedCount > 0) {
+            res.status(204).send();
+        } else {
+        // Responding with status 404 if the movie does not exist
+            res.status(404).json({ error: 'Movie not found' });
+        }
+    } catch (error) {
+      // Log the error for troubleshooting
+        console.error('Error in update_movie:', error);
+
+      // Responding with status 500 and an error message if there's an issue
+        res.status(500).json({ error: 'Some error occurred while updating the movie.' });
+    }
+};
+// delete existing contact
+const delete_movie = async (req, res) => {
+    try {
+      // Extracting contact ID from the request parameters
+    const movie_Id = req.params.id;
+      // Validate that contactId is a valid ObjectId before attempting to create ObjectId
+    if (!ObjectId.isValid(movie_Id)) {
+        return res.status(400).json({ error: 'Invalid contact ID format' });
+    }
+
+    const movieId = new ObjectId(movie_Id);
+
+      // Removing the movie with the specified ID from the 'movie' collection
+    const response = await mongodb.getDb().db().collection('movies').deleteOne({ _id: movieId });
+
+        console.log(response);
+
+        // Responding with status 204 if the movie is successfully deleted
+        if (response.deletedCount > 0) {
+            res.status(204).send();
+        } else {
+            // Responding with status 404 if the movie does not exist
+            res.status(404).json({ error: 'Contact not found' });
+        }
+    } catch (error) {
+      // Responding with status 500 and an error message if there's an issue
+        console.error(error);
+        res.status(500).json({ error: 'Some error occurred while deleting the movie.' });
+    }
+};
 
 module.exports = {
     pull_all_movies,
-    pull_single_movie
+    pull_single_movie,
+    create_movie,
+    update_movie,
+    delete_movie
 };

@@ -5,7 +5,7 @@ const doc = {
         title: 'moviebuffhub API',
         description: 'moviebuffhub API',
     },
-    host: 'https://moviebuffhub.onrender.com',
+    host: 'moviebuffhub.onrender.com',
     schemes: ['https'],
 };
 
