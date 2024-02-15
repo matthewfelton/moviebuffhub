@@ -41,7 +41,7 @@ Content-Type: application/json
 } 
 
 ### Delete Movie
-DELETE http://localhost:8080/movies/65c41e2ab1370df6c245f739 HTTP/1.1
+DELETE http://localhost:8080/movies/65c53e23ba79667f13c7e887 HTTP/1.1
 ###
 
 // ----------------------------------------------------------------------------------------------------------------------------------------------

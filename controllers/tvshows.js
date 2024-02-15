@@ -5,15 +5,23 @@ const ObjectId = require('mongodb').ObjectId;
 
 // pull all tv from db and creats an array using asynchronous fuction
 const pull_all_tv = async (req, res, next) => {
-    // Using MongoDB's async API to get the 'movies' collection 
-    const result = await mongodb.getDb().db().collection('tvshows').find();
-    // Converting the result to an array
-    result.toArray().then((lists) => {
+    try {
+        // Using MongoDB's async API to get the 'tvshows' collection 
+        const result = await mongodb.getDb().db().collection('tvshows').find();
+        
+        // Converting the result to an array
+        const lists = await result.toArray();
+
         // Setting the response header to indicate JSON content
         res.setHeader('Content-Type', 'application/json');
-        // Sending a JSON response with the fetched movies
+        
+        // Sending a JSON response with the fetched TV shows
         res.status(200).json(lists);
-    });
+    } catch (error) {
+        // Handle errors here
+        console.error("Error fetching TV shows:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 };
 
 const pull_single_tv = async (req, res, next) => {
@@ -45,19 +53,24 @@ const pull_single_tv = async (req, res, next) => {
 
 // creates new movie and sends to db
 const create_tv = async (req, res) => {
-    const tv = {
-        title: req.body.title,
-        genre: req.body.genre,
-        rating: req.body.rating,
-        runTime: req.body.runTime,
-        airTime: req.body.airTime
-        
-    };
-    const response = await mongodb.getDb().db().collection('tvshows').insertOne(tv);
-    if (response.acknowledged) {
-        res.status(201).json(response);
-    } else {
-        res.status(500).json(response.error || 'Some error occurred while creating the Tv Show.');
+    try {
+        const tv = {
+            title: req.body.title,
+            genre: req.body.genre,
+            rating: req.body.rating,
+            runTime: req.body.runTime,
+            airTime: req.body.airTime
+        };
+        const response = await mongodb.getDb().db().collection('tvshows').insertOne(tv);
+        if (response.acknowledged) {
+            res.status(201).json(response);
+        } else {
+            res.status(500).json(response.error || 'Some error occurred while creating the TV show.');
+        }
+    } catch (error) {
+        // Handle errors here
+        console.error("Error creating TV show:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };
 
@@ -66,14 +79,11 @@ const update_tv = async (req, res) => {
     try {
       // Extracting tv ID from the request parameters
     const tv_Id = req.params.id;
-
       // Validate that movie_id is a valid ObjectId before attempting to create ObjectId
     if (!ObjectId.isValid(tv_Id)) {
         return res.status(400).json({ error: 'Invalid contact ID format' });
     }
-
     const tvId = new ObjectId(tv_Id);
-
       // Creating a movie object from the request body
     const tv = {
         title: req.body.title,
@@ -96,7 +106,6 @@ const update_tv = async (req, res) => {
     } catch (error) {
       // Log the error for troubleshooting
         console.error('Error in update_tv:', error);
-
       // Responding with status 500 and an error message if there's an issue
         res.status(500).json({ error: 'Some error occurred while updating the tv show.' });
     }
@@ -110,14 +119,10 @@ const delete_tv = async (req, res) => {
     if (!ObjectId.isValid(tv_Id)) {
         return res.status(400).json({ error: 'Invalid tv show ID format' });
     }
-
     const tvId = new ObjectId(tv_Id);
-
       // Removing the movie with the specified ID from the 'movie' collection
     const response = await mongodb.getDb().db().collection('tvshows').deleteOne({ _id: tvId });
-
         console.log(response);
-
         // Responding with status 204 if the movie is successfully deleted
         if (response.deletedCount > 0) {
             res.status(204).send();
