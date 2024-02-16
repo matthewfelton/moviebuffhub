@@ -128,7 +128,7 @@ const delete_movie = async (req, res) => {
             res.status(204).send();
         } else {
             // Responding with status 404 if the movie does not exist
-            res.status(404).json({ error: 'tv show not found' });
+            res.status(404).json({ error: 'Movie not found' });
         }
     } catch (error) {
       // Responding with status 500 and an error message if there's an issue
