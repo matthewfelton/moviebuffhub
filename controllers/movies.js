@@ -3,6 +3,8 @@ const mongodb = require('../db/connection');
 // important ObjectId and allows single pull movie to work and not error out and murder the server
 const ObjectId = require('mongodb').ObjectId;
 
+const { validateMovie, handleValidationErrors } = require('../middleware/validation');
+
 // pull all movies from db and creats an array using asynchronous fuction
 const pull_all_movies = async (req, res, next) => {
     try {
@@ -50,6 +52,8 @@ const pull_single_movie = async (req, res, next) => {
 
 // creates new movie and sends to db
 const create_movie = async (req, res) => {
+    // Validation middleware
+    validateMovie(req, res, handleValidationErrors);
     try {
         const movie = {
             title: req.body.title,
@@ -75,6 +79,7 @@ const create_movie = async (req, res) => {
 
 // update existing db
 const update_movie = async (req, res) => {
+    validateMovie(req, res, handleValidationErrors);
     try {
       // Extracting movie ID from the request parameters
     const movie_Id = req.params.id;

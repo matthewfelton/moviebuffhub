@@ -3,6 +3,8 @@ const mongodb = require('../db/connection');
 // important ObjectId and allows single pull tv to work and not error out and murder the server
 const ObjectId = require('mongodb').ObjectId;
 
+const { validateTVShow, handleValidationErrors } = require('../middleware/validation');
+
 // pull all tv from db and creats an array using asynchronous fuction
 const pull_all_tv = async (req, res, next) => {
     try {
@@ -53,6 +55,8 @@ const pull_single_tv = async (req, res, next) => {
 
 // creates new movie and sends to db
 const create_tv = async (req, res) => {
+    // Validation middleware
+    validateTVShow(req, res, handleValidationErrors);
     try {
         const tv = {
             title: req.body.title,
@@ -76,6 +80,7 @@ const create_tv = async (req, res) => {
 
 // update existing db
 const update_tv = async (req, res) => {
+    validateTVShow(req, res, handleValidationErrors);
     try {
       // Extracting tv ID from the request parameters
     const tv_Id = req.params.id;
