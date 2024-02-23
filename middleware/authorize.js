@@ -9,7 +9,7 @@ const checkLogStatus = (req, res, next) => {
     next();
 };
 
-
+// Check for access for viewing and modifing data
 const checkLogAll = (req, res, next) => {
     if (!req.oidc.isAuthenticated()) {
         return res.status(401).send({
