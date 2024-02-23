@@ -1,3 +1,4 @@
+// Checks for access for modifing data
 const checkLogStatus = (req, res, next) => {
     if (!req.oidc.isAuthenticated()) {
         return res.status(401).send({
