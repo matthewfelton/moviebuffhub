@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // swagger route
-router.use('/api-doc', require('./swagger'));
+router.use('/api-docs', require('./swagger'));
 
 
 
